@@ -7,6 +7,14 @@ jobs:
   build_and_preview:
     if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
     runs-on: ubuntu-latest
+    env:
+      REACT_APP_API_KEY: "${{AIzaSyBiIK12SR3mzKfQuAjmaQO6f40z7_Ppj68}}"
+      REACT_APP_AUTH_DOMAIN: "${{cloudfunctions-9418a.firebaseapp.com}}"
+      REACT_APP_PROJECT_ID: "${{cloudfunctions-9418a}}"
+      REACT_APP_STORAGE_BUCKET: "${{cloudfunctions-9418a.appspot.com}}"
+      REACT_APP_MESSAGING_SENDER_ID: "${{202242355013}}"
+      REACT_APP_APP_ID: "${{1:202242355013:web:585bed82b734a86d48182c}}"
+      REACT_APP_MEASUREMENT_ID: "${{G-82VYC5VR23}}"
     steps:
       - uses: actions/checkout@v2
       - run: npm install
