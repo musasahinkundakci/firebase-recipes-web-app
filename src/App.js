@@ -156,6 +156,7 @@ function App() {
       alert(err.message);
       throw err;
     }).finally(() => setIsLoading(false))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, categoryFilter, orderBy, recipesPerPage])//[] içne deki şeyler değişnce kod yeniden çalışır
   return (
     <div className="App">
