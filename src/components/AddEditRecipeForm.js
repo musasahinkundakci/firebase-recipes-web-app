@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import ImageUploadPreview from './ImageUploadPreview';
 
 const AddEditRecipeForm = ({ handleDeleteRecipe, existingRecipe, handleUpdateRecipe, handleEditRecipeCancel, handleAddRecipe }) => {
     const [name, setName] = useState("");
@@ -7,13 +8,15 @@ const AddEditRecipeForm = ({ handleDeleteRecipe, existingRecipe, handleUpdateRec
     const [directions, setDirections] = useState("");
     const [ingredients, setIngredients] = useState("");
     const [ingredientName, setIngredientName] = useState("");
+    const [imageUrl, setImageUrl] = useState("");
     useEffect(() => {
         if (existingRecipe) {
             setName(existingRecipe.name);
             setDirections(existingRecipe.directions);
             setCategory(existingRecipe.category);
             setPublishDate(existingRecipe.publishDate.toISOString().split("T")[0]);
-            setIngredients(existingRecipe.ingredients)
+            setIngredients(existingRecipe.ingredients);
+            setImageUrl(existingRecipe.imageUrl);
         }
 
     }, [existingRecipe])
@@ -35,6 +38,10 @@ const AddEditRecipeForm = ({ handleDeleteRecipe, existingRecipe, handleUpdateRec
             alert("Ingredients cannot be empty. Please add at least 1 ingredient.");
             return;
         }
+        if (!imageUrl) {
+            alert("Missing recipe image.Please add a recipe image.");
+            return;
+        }
         const isPublished = new Date(publishDate) <= new Date() ? true : false;
         const newRecipe = {
             name,
@@ -42,7 +49,8 @@ const AddEditRecipeForm = ({ handleDeleteRecipe, existingRecipe, handleUpdateRec
             directions,
             publishDate: new Date(publishDate),
             isPublished,
-            ingredients
+            ingredients,
+            imageUrl: imageUrl
         };
         if (existingRecipe) {
             handleUpdateRecipe(newRecipe, existingRecipe.id);
@@ -57,11 +65,21 @@ const AddEditRecipeForm = ({ handleDeleteRecipe, existingRecipe, handleUpdateRec
         setCategory("");
         setPublishDate("");
         setIngredients([])
+        setImageUrl("")
     }
     return (
         <form className='add-edit-recipe-form-container' onSubmit={handleRecipeSubmit}>
             <h2 >{existingRecipe ? "Update The Recipe" : "Add a New Recipe"}</h2>
             <div className='top-form-section'>
+                <div className='image-input-box'>
+                    Recipe Image
+                    <ImageUploadPreview
+                        basePath="recipes"
+                        existingImageUrl={imageUrl}
+                        handleUploadFinish={(downloadUrl) => { setImageUrl(downloadUrl) }}
+                        handleUploadCancel={() => setImageUrl("")}
+                    />
+                </div>
                 <div className='fields'>
                     <label className='recipe-label input-label'>Recipe Name:</label>
                     <input type="text" required value={name} onChange={e => setName(e.target.value)} className="input-text  w" />

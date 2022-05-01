@@ -6,7 +6,7 @@ const registerUser = (email, password) => {
     return auth.createUserWithEmailAndPassword(email, password);//bir promise döner ve biz onu handle etcez sonra
 }
 const loginUser = (email, password) => {
-    return auth.signInWithEmailAndPassword(email, password);
+    return auth.createUserWithEmailAndPassword(email, password);
 }
 
 const logoutUser = () => {

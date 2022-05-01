@@ -217,6 +217,11 @@ function App() {
                           ) : ""
                         }
                         <div className='recipe-name'>{recipe.name}</div>
+                        <div className='recipe-image-box'>
+                          {recipe.imageUrl ? (
+                            <img src={recipe.imageUrl} alt={recipe.imageUrl} className="recipe-image" />
+                          ) : ""}
+                        </div>
                         <div className='recipe-field'>Category: {lookupCategoryLabel(recipe.category)}</div>
                         <div className='recipe-field'>Publish Date: {formatDate(recipe.publishDate)}</div>
                         {
